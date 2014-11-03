@@ -56,7 +56,7 @@ let extractPlatforms path =
     split path
     |> List.choose extractPlatform
 
-let rec supportedPlatforms (platform:Platform) =
+let supportedPlatforms (platform:Platform) =
     match platform with
     | Net10 -> [ ]
     | Net11 -> [ Net10 ]
@@ -86,16 +86,25 @@ let rec supportedPlatforms (platform:Platform) =
     | Profile4 -> [ Net45; Silverlight4; Windows8; WindowsPhoneSilverlight7 ]
     | Profile5 -> [ Net40; Windows8; MonoAndroid; MonoTouch ]
 
-    |> List.collect (fun p -> p :: supportedPlatforms p) // add indirectly supported platforms
     |> Set.ofList |> Set.toList // remove duplicates
 
-let GetSupportedTargetFrameworks(path:string) =
-    match extractPlatform path with
-    | Some(p) -> supportedPlatforms p
-    | _ -> []
+let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) =
+    if packagePlatform = targetPlatform then
+        0
+    else
+        let penalties = supportedPlatforms targetPlatform
+                        |> List.map (getPlatformPenalty packagePlatform)
+        List.min (999::penalties) + 1
 
-let GetCondition (path:string) =
-    ""
+// Checks wether the target platform is supported by this path and with which penalty. 
+let getPathPenalty (targetPlatform:Platform) (path:string) =
+    // split path into package platforms
+    extractPlatforms path
+    // for each package platform get penalty
+    |> List.map (getPlatformPenalty targetPlatform)
+    // sum up
+    |> List.sum
 
-let findBestMatch (paths:string list) (platform:Platform) =
-    Some ""
+//let findBestMatch (paths:string list) (targetPlatform:Platform) =
+//    paths
+//    |> List.map getPenalty targetPlatform

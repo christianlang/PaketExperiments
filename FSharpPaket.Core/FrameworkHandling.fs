@@ -65,40 +65,39 @@ let extractPlatforms path =
     split path
     |> List.choose extractPlatform
 
+// For a given platform return a list of compatible platforms that is also supports.
 let supportedPlatforms (platform:Platform) =
     match platform with
-    | Net10 -> [ Net11]
-    | Net11 -> [ Net20 ]
-    | Net20 -> [ Net30 ]
-    | Net30 -> [ Net35 ]
-    | Net35 -> [ Net40 ]
-    | Net40Client -> [ Net40 ]
-    | Net40 -> [ Net45 ]
-    | Net45 -> [ Net451 ]
-    | Net451 -> [ Net452 ]
-    | Net452 -> [ Net453 ]
-    | Net453 -> [ MonoAndroid; MonoTouch ]
-    | MonoAndroid -> [ ]
-    | MonoTouch -> [ ]
-    | Silverlight3 -> [ Silverlight4 ]
-    | Silverlight4 -> [ Silverlight5 ]
-    | Silverlight5 -> [ ]
-    | Windows8 -> [ Windows81 ]
-    | Windows81 -> [ ]
-    | WindowsPhoneSilverlight7 -> [ WindowsPhoneSilverlight71 ]
-    | WindowsPhoneSilverlight71 -> [ WindowsPhoneSilverlight8 ]
-    | WindowsPhoneSilverlight8 -> [ WindowsPhoneSilverlight81 ]
-    | WindowsPhoneSilverlight81 -> [ ]
+    | Net10 -> [ ]
+    | Net11 -> [ Net10 ]
+    | Net20 -> [ Net11 ]
+    | Net30 -> [ Net20 ]
+    | Net35 -> [ Net20 ]
+    | Net40Client -> [ ]
+    | Net40 -> [ Net35; Net40Client ]
+    | Net45 -> [ Net40 ]
+    | Net451 -> [ Net45 ]
+    | Net452 -> [ Net451 ]
+    | Net453 -> [ Net452 ]
+    | MonoAndroid -> [ Net453 ]
+    | MonoTouch -> [ Net453 ]
+    | Silverlight3 -> [ ]
+    | Silverlight4 -> [ Silverlight3 ]
+    | Silverlight5 -> [ Silverlight4 ]
+    | Windows8 -> [ ]
+    | Windows81 -> [ Windows8 ]
+    | WindowsPhoneSilverlight7 -> [ ]
+    | WindowsPhoneSilverlight71 -> [ WindowsPhoneSilverlight7 ]
+    | WindowsPhoneSilverlight8 -> [ WindowsPhoneSilverlight71 ]
+    | WindowsPhoneSilverlight81 -> [ WindowsPhoneSilverlight8 ]
     | WindowsPhone81 -> [ ]
-
-    |> Set.ofList |> Set.toList // remove duplicates
 
 let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) =
     if packagePlatform = targetPlatform then
         0
     else
-        let penalties = supportedPlatforms packagePlatform
-                        |> List.map (getPlatformPenalty targetPlatform)
+        let penalties = supportedPlatforms targetPlatform
+                        |> List.map (getPlatformPenalty packagePlatform)
         List.min (999::penalties) + 1
 
 let getPathPenalty (path:string) (platform:Platform) =

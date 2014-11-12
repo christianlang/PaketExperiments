@@ -25,10 +25,8 @@ type Platform =
     | WindowsPhoneSilverlight81
     | WindowsPhone81
 
-//type PortableProfile = Platform[]
-
 type TargetProfile =
-    | Platform of Platform
+    | SinglePlatform of Platform
     | PortableProfile of string * Platform list
 
     static member KnownProfiles =
@@ -111,6 +109,20 @@ let getPenalty (requiredPlatforms:Platform list) (path:string) =
     |> List.map (getPathPenalty path)
     |> List.sum
 
-//let findBestMatch (paths:string list) (targetPlatform:Platform) =
-//    paths
-//    |> List.map getPenalty targetPlatform
+let findBestMatch (paths:string list) (targetProfile:TargetProfile) =
+    let requiredPlatforms = match targetProfile with
+                            | PortableProfile(_, platforms) -> platforms
+                            | SinglePlatform(platform) -> [platform]
+
+    let pathPenalties = paths
+                        |> List.map (fun path -> (path, getPenalty requiredPlatforms path))
+
+    let minPenalty = pathPenalties
+                     |> List.map (fun (path, penalty) -> penalty)
+                     |> List.min
+
+    pathPenalties
+    |> List.filter (fun (path, penalty) -> penalty = minPenalty && minPenalty < 1000)
+    |> List.map (fun (path, penalty) -> path)
+    |> List.sortBy (fun path -> (extractPlatforms path).Length)
+    |> List.tryFind (fun _ -> true)

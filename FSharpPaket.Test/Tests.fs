@@ -2,6 +2,7 @@
 
 open NUnit.Framework
 open FsUnit
+open FrameworkHandling
 
 module ``Given a target platform`` =
     
@@ -29,6 +30,21 @@ module ``Given a path`` =
     [<Test>]
     let ``it should ignore 'portable-'``() =
         FrameworkHandling.extractPlatforms "portable-net40+win8" |> should equal [ FrameworkHandling.Net40; FrameworkHandling.Windows8 ]
+        
+    [<Test>]
+    let ``it should return no penalty for a matching .NET framework``() =
+        getPenalty [ Net45 ], "net45"
+        |> should equal 0
+        
+    [<Test>]
+    let ``it should return no penalty for a matching portable profile``() =
+        getPenalty [ Net40; Silverlight4 ], "net40+sl4"
+        |> should equal 0
+        
+    [<Test>]
+    let ``it should return 1 for a compatible portable profile``() =
+        getPenalty [ Net40; Silverlight5 ] "net40+sl4"
+        |> should equal 1
 
 //module ``Given a list of paths`` =
 //    let paths = [ "net40"

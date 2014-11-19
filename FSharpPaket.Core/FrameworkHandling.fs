@@ -42,6 +42,11 @@ type Platform =
     | WindowsPhoneSilverlight81
     | WindowsPhone81
 
+// shorthand notations
+let Net40 = Net NetVersion.V4
+let Net45 = Net NetVersion.V4_5
+let Net451 = Net NetVersion.V4_5_1
+
 type TargetProfile =
     | SinglePlatform of Platform
     | PortableProfile of string * Platform list
@@ -221,13 +226,11 @@ let findBestMatch (paths:string list) (targetProfile:TargetProfile) =
 
 // For a given list of paths and target profiles return tuples of paths with their supported target profiles.
 // Every target profile will only be listed for own path - the one that best supports it. 
-let x (paths:string list) =
+let getSupportedTargetProfiles (paths:string list) =
     TargetProfile.KnownTargetProfiles
-    |> List.map (fun targetProfile -> (targetProfile, (findBestMatch paths targetProfile)))
-    |> List.collect (fun (profile, path) -> match path with
-                                            | Some(p) -> [(profile, p)]
-                                            | _ -> [])
-    |> Seq.groupBy (fun (profile, path) -> path)
-    |> Seq.map (fun (path, group) -> Seq.map (fun (profile, path) -> profile))
-//    |> List.filter (fun (profile, path) -> path <> None)
-//    |> Seq.groupBy (fun (profile, path) -> path)
+    |> List.map (fun target -> ((findBestMatch paths target), target))
+    |> List.collect (fun (path, target) -> match path with
+                                           | Some(p) -> [(p, target)]
+                                           | _ -> [])
+    |> Seq.groupBy (fun (path, target) -> path)
+    |> Seq.map (fun (path, group) -> (path, Seq.map (fun (_, target) -> target) group))

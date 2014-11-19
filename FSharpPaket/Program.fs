@@ -9,5 +9,5 @@ let main argv =
 
     let profile = FrameworkHandling.TargetProfile.findPortableProfile "Profile92"
     let m = FrameworkHandling.findBestMatch paths profile
-    let result = FrameworkHandling.x paths
+    let result = FrameworkHandling.getSupportedTargetProfiles paths
     0 // return an integer exit code

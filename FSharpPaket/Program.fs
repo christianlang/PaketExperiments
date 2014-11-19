@@ -7,6 +7,7 @@ let main argv =
 
     let paths = [ "net4+win8+wpa81" ]
 
-    let profile = FrameworkHandling.TargetProfile.findProfile "Profile92"
+    let profile = FrameworkHandling.TargetProfile.findPortableProfile "Profile92"
     let m = FrameworkHandling.findBestMatch paths profile
+    let result = FrameworkHandling.x paths
     0 // return an integer exit code

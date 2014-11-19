@@ -8,42 +8,42 @@ module ``Given a target platform`` =
     
     [<Test>]
     let ``it should return no penalty for the same platform``() =
-        getPlatformPenalty Net45 Net45
+        getPlatformPenalty (Net NetVersion.V4_5) (Net NetVersion.V4_5)
         |> should equal 0
 
     [<Test>]
     let ``it should return the right penalty for a compatible platform``() =
-        getPlatformPenalty Net45 Net40
+        getPlatformPenalty (Net NetVersion.V4_5) (Net NetVersion.V4)
         |> should equal 1
 
     [<Test>]
     let ``it should return > 1000 for an incompatible platform``() =
-        getPlatformPenalty Net45 Silverlight5
+        getPlatformPenalty (Net NetVersion.V4_5) (Silverlight "v5.0")
         |> should greaterThan 1000
 
 module ``Given a path`` =
 
     [<Test>]
     let ``it should split it into the right platforms``() =
-        extractPlatforms "net40+win8" |> should equal [ Net40; Windows8 ]
+        extractPlatforms "net40+win8" |> should equal [ Net NetVersion.V4; Windows "v8.0" ]
 
     [<Test>]
     let ``it should ignore 'portable-'``() =
-        extractPlatforms "portable-net40+win8" |> should equal [ Net40; Windows8 ]
+        extractPlatforms "portable-net40+win8" |> should equal [ Net NetVersion.V4; Windows "v8.0" ]
         
     [<Test>]
     let ``it should return no penalty for a matching .NET framework``() =
-        getPenalty [ Net45 ] "net45"
+        getPenalty [ Net NetVersion.V4_5 ] "net45"
         |> should equal 0
     
     [<Test>]
     let ``it should return no penalty for a matching portable profile``() =
-        getPenalty [ Net40; Silverlight4 ] "net40+sl4"
+        getPenalty [ Net NetVersion.V4; Silverlight "v4.0" ] "net40+sl4"
         |> should equal 0
     
     [<Test>]
     let ``it should return 1 for a compatible portable profile``() =
-        getPenalty [ Net40; Silverlight5 ] "net40+sl4"
+        getPenalty [ Net NetVersion.V4; Silverlight "v5.0" ] "net40+sl4"
         |> should equal 1
 
 
@@ -62,15 +62,15 @@ module ``Given a list of paths`` =
 
     [<Test>]
     let ``it should find the best match for .NET 4.0``() =
-        findBestMatch paths (SinglePlatform Net40) |> should equal (Some "net40")
+        findBestMatch paths (SinglePlatform (Net NetVersion.V4)) |> should equal (Some "net40")
 
     [<Test>]
     let ``it should find the best match for Silverlight 5``() =
-        findBestMatch paths (SinglePlatform Silverlight5) |> should equal (Some "sl5")
+        findBestMatch paths (SinglePlatform (Silverlight "v5.0")) |> should equal (Some "sl5")
 
     [<Test>]
     let ``it should find no match for Silverlight 4``() =
-        findBestMatch paths (SinglePlatform Silverlight4) |> should equal None
+        findBestMatch paths (SinglePlatform (Silverlight "v4.0")) |> should equal None
     
     module ``when I get the supported target profiles`` =
 

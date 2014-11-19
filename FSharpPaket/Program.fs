@@ -1,4 +1,5 @@
-﻿
+﻿open FrameworkHandling
+
 [<EntryPoint>]
 let main argv = 
     printfn "%A" argv
@@ -7,7 +8,8 @@ let main argv =
 
     let paths = [ "net4+win8+wpa81" ]
 
-    let profile = FrameworkHandling.TargetProfile.findPortableProfile "Profile92"
-    let m = FrameworkHandling.findBestMatch paths profile
-    let result = FrameworkHandling.getSupportedTargetProfiles paths
+    let profile = TargetProfile.findPortableProfile "Profile92"
+    let m = findBestMatch paths profile
+    let result = getSupportedTargetProfiles paths
+    let condition = result.["net4+win8+wpa81"] |> List.ofSeq |> getPathCondition
     0 // return an integer exit code

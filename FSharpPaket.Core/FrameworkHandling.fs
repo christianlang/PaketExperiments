@@ -1,7 +1,6 @@
 ﻿module FrameworkHandling
 
-[<RequireQualifiedAccess>]
-type NetVersion = 
+type NetVersion =
     | V1
     | V1_1
     | V2
@@ -31,21 +30,10 @@ type Platform =
     | Net of NetVersion
     | MonoAndroid
     | MonoTouch
-    | Silverlight3
-    | Silverlight4
-    | Silverlight5
-    | Windows8
-    | Windows81
-    | WindowsPhoneSilverlight7
-    | WindowsPhoneSilverlight71
-    | WindowsPhoneSilverlight8
-    | WindowsPhoneSilverlight81
-    | WindowsPhone81
-
-// shorthand notations
-let Net40 = Net NetVersion.V4
-let Net45 = Net NetVersion.V4_5
-let Net451 = Net NetVersion.V4_5_1
+    | Silverlight of string
+    | Windows of string
+    | WindowsPhoneSilverlight of string
+    | WindowsPhoneApp of string
 
 type TargetProfile =
     | SinglePlatform of Platform
@@ -65,61 +53,61 @@ type TargetProfile =
          SinglePlatform(Net NetVersion.V4_5_3)
          SinglePlatform(MonoAndroid)
          SinglePlatform(MonoTouch)
-         SinglePlatform(Silverlight3)
-         SinglePlatform(Silverlight4)
-         SinglePlatform(Silverlight5)
-         SinglePlatform(Windows8)
-         SinglePlatform(Windows81)
-         SinglePlatform(WindowsPhoneSilverlight7)
-         SinglePlatform(WindowsPhoneSilverlight71)
-         SinglePlatform(WindowsPhoneSilverlight8)
-         SinglePlatform(WindowsPhoneSilverlight81)
-         SinglePlatform(WindowsPhone81)
-         PortableProfile("Profile2", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
-         PortableProfile("Profile3", [ Net NetVersion.V4; Silverlight4 ])
-         PortableProfile("Profile4", [ Net NetVersion.V4_5; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
-         PortableProfile("Profile5", [ Net NetVersion.V4; Windows8; MonoAndroid; MonoTouch ])
-         PortableProfile("Profile5", [ Net NetVersion.V4; Windows8 ])
-         PortableProfile("Profile6", [ Net NetVersion.V4; Windows8 ])
-         PortableProfile("Profile7" , [ Net NetVersion.V4_5; Windows8 ])
-         PortableProfile("Profile14", [ Net NetVersion.V4; Silverlight5 ])
-         PortableProfile("Profile18", [ Net NetVersion.V4; Silverlight4 ])
-         PortableProfile("Profile19", [ Net NetVersion.V4; Silverlight5 ])
-         PortableProfile("Profile23", [ Net NetVersion.V4_5; Silverlight4 ])
-         PortableProfile("Profile24", [ Net NetVersion.V4_5; Silverlight5 ])
-         PortableProfile("Profile31", [ Windows81; WindowsPhoneSilverlight81 ])
-         PortableProfile("Profile32", [ Windows81; WindowsPhone81 ])
-         PortableProfile("Profile36", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile37", [ Net NetVersion.V4; Silverlight5; Windows8 ])
-         PortableProfile("Profile41", [ Net NetVersion.V4; Silverlight4; Windows8 ])
-         PortableProfile("Profile42", [ Net NetVersion.V4; Silverlight5; Windows8 ])
-         PortableProfile("Profile44", [ Net NetVersion.V4_5_1; Windows81 ])
-         PortableProfile("Profile46", [ Net NetVersion.V4_5; Silverlight4; Windows8 ])
-         PortableProfile("Profile47", [ Net NetVersion.V4_5; Silverlight5; Windows8 ])
-         PortableProfile("Profile49", [ Net NetVersion.V4_5; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile78", [ Net NetVersion.V4_5; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile84", [ WindowsPhone81; WindowsPhoneSilverlight81 ])
-         PortableProfile("Profile88", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
-         PortableProfile("Profile92", [ Net NetVersion.V4; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile95", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
-         PortableProfile("Profile96", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
-         PortableProfile("Profile102", [ Net NetVersion.V4; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile104", [ Net NetVersion.V4_5; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
-         PortableProfile("Profile111", [ Net NetVersion.V4_5; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile136", [ Net NetVersion.V4; Silverlight5; WindowsPhoneSilverlight8; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile143", [ Net NetVersion.V4; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile147", [ Net NetVersion.V4; Silverlight5; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile151", [ Net NetVersion.V4_5_1; Windows81; WindowsPhone81 ])
-         PortableProfile("Profile154", [ Net NetVersion.V4_5; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile157", [ Windows81; WindowsPhone81; WindowsPhoneSilverlight81 ])
-         PortableProfile("Profile158", [ Net NetVersion.V4_5; Silverlight5; Windows8; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile225", [ Net  NetVersion.V4; Silverlight5; Windows8; WindowsPhone81 ])                  
-         PortableProfile("Profile240", [ Net NetVersion.V4; Silverlight5; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile255", [ Net NetVersion.V4_5; Silverlight5; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile259", [ Net NetVersion.V4_5; Windows8; WindowsPhoneSilverlight8; WindowsPhone81 ])
-         PortableProfile("Profile328", [ Net NetVersion.V4; Silverlight5; WindowsPhoneSilverlight8; Windows8; WindowsPhone81 ])
-         PortableProfile("Profile336", [ Net NetVersion.V4; Silverlight5; Windows8; WindowsPhone81; WindowsPhoneSilverlight8 ])
-         PortableProfile("Profile344", [ Net NetVersion.V4_5; Silverlight5; Windows8; WindowsPhone81; WindowsPhoneSilverlight8 ])]
+         SinglePlatform(Silverlight "v3.0")
+         SinglePlatform(Silverlight "v4.0")
+         SinglePlatform(Silverlight "v5.0")
+         SinglePlatform(Windows "v8.0")
+         SinglePlatform(Windows "v8.1")
+         SinglePlatform(WindowsPhoneSilverlight "v7.0")
+         SinglePlatform(WindowsPhoneSilverlight "v7.1")
+         SinglePlatform(WindowsPhoneSilverlight "v8.0")
+         SinglePlatform(WindowsPhoneSilverlight "v8.1")
+         SinglePlatform(WindowsPhoneApp "v8.1")
+         PortableProfile("Profile2", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile3", [ Net NetVersion.V4; Silverlight "v4.0" ])
+         PortableProfile("Profile4", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile5", [ Net NetVersion.V4; Windows "v8.0"; MonoAndroid; MonoTouch ])
+         PortableProfile("Profile5", [ Net NetVersion.V4; Windows "v8.0" ])
+         PortableProfile("Profile6", [ Net NetVersion.V4; Windows "v8.0" ])
+         PortableProfile("Profile7" , [ Net NetVersion.V4_5; Windows "v8.0" ])
+         PortableProfile("Profile14", [ Net NetVersion.V4; Silverlight "v5.0" ])
+         PortableProfile("Profile18", [ Net NetVersion.V4; Silverlight "v4.0" ])
+         PortableProfile("Profile19", [ Net NetVersion.V4; Silverlight "v5.0" ])
+         PortableProfile("Profile23", [ Net NetVersion.V4_5; Silverlight "v4.0" ])
+         PortableProfile("Profile24", [ Net NetVersion.V4_5; Silverlight "v5.0" ])
+         PortableProfile("Profile31", [ Windows "v8.1"; WindowsPhoneSilverlight "v8.1" ])
+         PortableProfile("Profile32", [ Windows "v8.1"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile36", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile37", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile41", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0" ])
+         PortableProfile("Profile42", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile44", [ Net NetVersion.V4_5_1; Windows "v8.1" ])
+         PortableProfile("Profile46", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0" ])
+         PortableProfile("Profile47", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile49", [ Net NetVersion.V4_5; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile78", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile84", [ WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.1" ])
+         PortableProfile("Profile88", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile92", [ Net NetVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile95", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile96", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile102", [ Net NetVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile104", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile111", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile136", [ Net NetVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile143", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile147", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile151", [ Net NetVersion.V4_5_1; Windows "v8.1"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile154", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile157", [ Windows "v8.1"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.1" ])
+         PortableProfile("Profile158", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile225", [ Net  NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])                  
+         PortableProfile("Profile240", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile255", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile259", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile328", [ Net NetVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile336", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile344", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])]
 
     static member findPortableProfile name =
         TargetProfile.KnownTargetProfiles
@@ -136,15 +124,15 @@ let extractPlatform = function
     | "net45" | "net451" -> Some (Net NetVersion.V4_5)
     | "monotouch" -> Some MonoTouch
     | "monoandroid" -> Some MonoAndroid
-    | "sl3" | "sl30" -> Some Silverlight3
-    | "sl4" | "sl40" -> Some Silverlight4
-    | "sl5" | "sl50" -> Some Silverlight5
-    | "win8" | "windows8" | "netcore45" | "winrt45" -> Some Windows8
-    | "win81" | "windows81" | "netcore46" | "winrt46" -> Some Windows81
-    | "wp7" | "windowsphone7" -> Some WindowsPhoneSilverlight7
-    | "wp71" | "windowsphone71" -> Some WindowsPhoneSilverlight71
-    | "wp8" | "windowsphone8" -> Some WindowsPhoneSilverlight8
-    | "wpa81" -> Some WindowsPhone81
+    | "sl3" | "sl30" -> Some (Silverlight "v3.0")
+    | "sl4" | "sl40" -> Some (Silverlight "v4.0")
+    | "sl5" | "sl50" -> Some (Silverlight "v5.0")
+    | "win8" | "windows8" | "netcore45" | "winrt45" -> Some (Windows "v8.0")
+    | "win81" | "windows81" | "netcore46" | "winrt46" -> Some (Windows "v8.1")
+    | "wp7" | "windowsphone7" -> Some (WindowsPhoneSilverlight "v7.0")
+    | "wp71" | "windowsphone71" -> Some (WindowsPhoneSilverlight "v7.1")
+    | "wp8" | "windowsphone8" -> Some (WindowsPhoneSilverlight "v8.0")
+    | "wpa81" -> Some (WindowsPhoneApp "v8.1")
     | _ -> None
 
 let split (path:string) =
@@ -157,6 +145,8 @@ let extractPlatforms path =
 // For a given platform return a list of compatible platforms that is also supports.
 let supportedPlatforms (platform:Platform) =
     match platform with
+    | MonoAndroid -> [ Net NetVersion.V4_5_3 ]
+    | MonoTouch -> [ Net NetVersion.V4_5_3 ]
     | Net NetVersion.V1 -> [ ]
     | Net NetVersion.V1_1 -> [ Net NetVersion.V1 ]
     | Net NetVersion.V2 -> [ Net NetVersion.V1_1 ]
@@ -168,24 +158,40 @@ let supportedPlatforms (platform:Platform) =
     | Net NetVersion.V4_5_1 -> [ Net NetVersion.V4_5 ]
     | Net NetVersion.V4_5_2 -> [ Net NetVersion.V4_5_1 ]
     | Net NetVersion.V4_5_3 -> [ Net NetVersion.V4_5_2 ]
-    | MonoAndroid -> [ Net NetVersion.V4_5_3 ]
-    | MonoTouch -> [ Net NetVersion.V4_5_3 ]
-    | Silverlight3 -> [ ]
-    | Silverlight4 -> [ Silverlight3 ]
-    | Silverlight5 -> [ Silverlight4 ]
-    | Windows8 -> [ ]
-    | Windows81 -> [ Windows8 ]
-    | WindowsPhoneSilverlight7 -> [ ]
-    | WindowsPhoneSilverlight71 -> [ WindowsPhoneSilverlight7 ]
-    | WindowsPhoneSilverlight8 -> [ WindowsPhoneSilverlight71 ]
-    | WindowsPhoneSilverlight81 -> [ WindowsPhoneSilverlight8 ]
-    | WindowsPhone81 -> [ ]
+    | Silverlight "v3.0" -> [ ]
+    | Silverlight "v4.0" -> [ Silverlight "v3.0" ]
+    | Silverlight "v5.0" -> [ Silverlight "v4.0" ]
+    | Windows "v8.0" -> [ ]
+    | Windows "v8.1" -> [ Windows "v8.0" ]
+    | WindowsPhoneApp "v8.1" -> [ ]
+    | WindowsPhoneSilverlight "v7.0" -> [ ]
+    | WindowsPhoneSilverlight "v7.1" -> [ WindowsPhoneSilverlight "v7.0" ]
+    | WindowsPhoneSilverlight "v8.0" -> [ WindowsPhoneSilverlight "v7.1" ]
+    | WindowsPhoneSilverlight "v8.1" -> [ WindowsPhoneSilverlight "v8.0" ]
+
+    // wildcards for future versions. new versions should be added above, though, so the penalty will be calculated correctly.
+    | Silverlight _ -> [ Silverlight "v5.0" ]
+    | Windows _ -> [ Windows "v8.1" ]
+    | WindowsPhoneApp _ -> [ WindowsPhoneApp "v8.1" ]
+    | WindowsPhoneSilverlight _ -> [ WindowsPhoneSilverlight "v8.1" ]
     
-let getCondition (target:TargetProfile) = function
+let getCondition (target:TargetProfile) =
+    match target with
     | SinglePlatform(platform) -> match platform with
                                   | Net(version) -> System.String.Format("$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | Windows(version) -> System.String.Format("$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | Silverlight(version) -> System.String.Format("$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | WindowsPhoneApp(version) -> System.String.Format("$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | WindowsPhoneSilverlight(version) -> System.String.Format("$(TargetFrameworkIdentifier) == 'WindowsPhone' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | MonoAndroid | MonoTouch -> "false" // should be covered by the .NET case above
 
     | PortableProfile(name, _) -> System.String.Format("$(TargetFrameworkProfile) == '{0}'", name)
+
+let rec getPathCondition (targets:TargetProfile list) =
+    match targets with
+    | [target] -> getCondition target
+    | target::rest -> getCondition target + "\nOr " + getPathCondition rest
+    | [] -> ""
 
 let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) =
     if packagePlatform = targetPlatform then

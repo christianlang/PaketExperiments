@@ -33,8 +33,54 @@ type TargetProfile =
         [PortableProfile("Profile2", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
          PortableProfile("Profile3", [ Net40; Silverlight4 ])
          PortableProfile("Profile4", [ Net45; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
-         PortableProfile("Profile5", [ Net40; Windows8; MonoAndroid; MonoTouch ])]
+         PortableProfile("Profile5", [ Net40; Windows8; MonoAndroid; MonoTouch ])
+         PortableProfile("Profile5", [ Net40; Windows8 ])
+         PortableProfile("Profile6", [ Net40; Windows8 ])
+         PortableProfile("Profile7" , [ Net45; Windows8 ])
+         PortableProfile("Profile14", [ Net40; Silverlight5 ])
+         PortableProfile("Profile18", [ Net40; Silverlight4 ])
+         PortableProfile("Profile19", [ Net40; Silverlight5 ])
+         PortableProfile("Profile23", [ Net45; Silverlight4 ])
+         PortableProfile("Profile24", [ Net45; Silverlight5 ])
+         PortableProfile("Profile31", [ Windows81; WindowsPhoneSilverlight81 ])
+         PortableProfile("Profile32", [ Windows81; WindowsPhone81 ])
+         PortableProfile("Profile36", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile37", [ Net40; Silverlight5; Windows8 ])
+         PortableProfile("Profile41", [ Net40; Silverlight4; Windows8 ])
+         PortableProfile("Profile42", [ Net40; Silverlight5; Windows8 ])
+         PortableProfile("Profile44", [ Net451; Windows81 ])
+         PortableProfile("Profile46", [ Net45; Silverlight4; Windows8 ])
+         PortableProfile("Profile47", [ Net45; Silverlight5; Windows8 ])
+         PortableProfile("Profile49", [ Net45; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile78", [ Net45; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile84", [ WindowsPhone81; WindowsPhoneSilverlight81 ])
+         PortableProfile("Profile88", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
+         PortableProfile("Profile92", [ Net40; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile95", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight7 ])
+         PortableProfile("Profile96", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
+         PortableProfile("Profile102", [ Net40; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile104", [ Net45; Silverlight4; Windows8; WindowsPhoneSilverlight71 ])
+         PortableProfile("Profile111", [ Net45; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile136", [ Net40; Silverlight5; WindowsPhoneSilverlight8; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile143", [ Net40; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile147", [ Net40; Silverlight5; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile151", [ Net451; Windows81; WindowsPhone81 ])
+         PortableProfile("Profile154", [ Net45; Silverlight4; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile157", [ Windows81; WindowsPhone81; WindowsPhoneSilverlight81 ])
+         PortableProfile("Profile158", [ Net45; Silverlight5; Windows8; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile225", [ Net40; Silverlight5; Windows8; WindowsPhone81 ])                  
+         PortableProfile("Profile240", [ Net40; Silverlight5; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile255", [ Net45; Silverlight5; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile259", [ Net45; Windows8; WindowsPhoneSilverlight8; WindowsPhone81 ])
+         PortableProfile("Profile328", [ Net40; Silverlight5; WindowsPhoneSilverlight8; Windows8; WindowsPhone81 ])
+         PortableProfile("Profile336", [ Net40; Silverlight5; Windows8; WindowsPhone81; WindowsPhoneSilverlight8 ])
+         PortableProfile("Profile344", [ Net45; Silverlight5; Windows8; WindowsPhone81; WindowsPhoneSilverlight8 ])]
 
+    static member findProfile name =
+        TargetProfile.KnownProfiles
+        |> List.pick (fun target -> match target with
+                                    | PortableProfile(n, _) as p -> if n = name then Some(p) else None
+                                    | _ -> None)
 
 let extractPlatform = function
     | "net10" | "net1" | "1.0" -> Some Net10
@@ -70,7 +116,7 @@ let supportedPlatforms (platform:Platform) =
     | Net11 -> [ Net10 ]
     | Net20 -> [ Net11 ]
     | Net30 -> [ Net20 ]
-    | Net35 -> [ Net20 ]
+    | Net35 -> [ Net30 ]
     | Net40Client -> [ ]
     | Net40 -> [ Net35; Net40Client ]
     | Net45 -> [ Net40 ]
@@ -96,7 +142,7 @@ let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) 
     else
         let penalties = supportedPlatforms targetPlatform
                         |> List.map (getPlatformPenalty packagePlatform)
-        List.min (999::penalties) + 1
+        List.min (1000::penalties) + 1
 
 let getPathPenalty (path:string) (platform:Platform) =
     extractPlatforms path

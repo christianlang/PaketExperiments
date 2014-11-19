@@ -17,9 +17,9 @@ module ``Given a target platform`` =
         |> should equal 1
 
     [<Test>]
-    let ``it should return 1000 for an incompatible platform``() =
+    let ``it should return > 1000 for an incompatible platform``() =
         getPlatformPenalty Net45 Silverlight5
-        |> should equal 1000
+        |> should greaterThan 1000
 
 module ``Given a path`` =
 

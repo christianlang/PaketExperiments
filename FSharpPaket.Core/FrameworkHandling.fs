@@ -234,3 +234,4 @@ let getSupportedTargetProfiles (paths:string list) =
                                            | _ -> [])
     |> Seq.groupBy (fun (path, target) -> path)
     |> Seq.map (fun (path, group) -> (path, Seq.map (fun (_, target) -> target) group))
+    |> Map.ofSeq

@@ -71,3 +71,18 @@ module ``Given a list of paths`` =
     [<Test>]
     let ``it should find no match for Silverlight 4``() =
         findBestMatch paths (SinglePlatform Silverlight4) |> should equal None
+    
+    module ``when I get the supported target profiles`` =
+
+        let supportedTargetProfiles = getSupportedTargetProfiles paths
+
+        [<Test>]
+        let ``it should contain profile 32``() =
+            supportedTargetProfiles.["portable-win81+wpa81"]
+            |> should contain (TargetProfile.findPortableProfile "Profile32")
+        
+        [<Test>]
+        let ``it should not contain profile 41``() =
+            let flattend = seq { for item in supportedTargetProfiles do yield! item.Value }
+            flattend
+            |> should not' (contain (TargetProfile.findPortableProfile "Profile41"))

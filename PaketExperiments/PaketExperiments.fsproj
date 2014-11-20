@@ -51,8 +51,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FSharpPaket.Core\FSharpPaket.Core.fsproj">
-      <Name>FSharpPaket.Core</Name>
+    <ProjectReference Include="..\PaketExperiments.Core\PaketExperiments.Core.fsproj">
+      <Name>PaketExperiments.Core</Name>
       <Project>{bf4a0fb9-269f-4d91-b2d6-929b6a957caa}</Project>
       <Private>True</Private>
     </ProjectReference>

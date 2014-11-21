@@ -115,23 +115,50 @@ type TargetProfile =
                                     | PortableProfile(n, _) as p -> if n = name then Some(p) else None
                                     | _ -> None)
 
-let extractPlatform = function
-    | "net10" | "net1" | "1.0" -> Some (Net NetVersion.V1)
-    | "net11" | "1.1" -> Some (Net NetVersion.V1_1)
-    | "net20" | "net2" | "net20-full" | "2.0" -> Some (Net NetVersion.V2)
-    | "net35" | "net35-full" -> Some (Net NetVersion.V3_5)
-    | "net40" | "net4" | "net40-full" | "net403" -> Some (Net NetVersion.V4)
-    | "net45" | "net451" -> Some (Net NetVersion.V4_5)
+let extractPlatform (path:string) =
+    let knownAliases =
+        [".net", "net"
+         "netframework", "net"
+         ".netframework", "net"
+         ".netcore", "netcore"
+         "winrt", "netcore"
+         "silverlight", "sl"
+         "windowsphone", "wp"
+         "windows", "win"
+         "windowsPhoneApp", "wpa"
+         
+         "1.0", "10" 
+         "1.1", "11" 
+         "2.0", "20" 
+         "3.5", "35" 
+         "4.0", "40" 
+         "4.5", "45" 
+         "0.0", "" ]
+
+    let path =
+        knownAliases
+        |> List.fold (fun (path:string) (pattern, replacement) -> path.Replace(pattern.ToLower(), replacement.ToLower())) (path.ToLower())
+    
+    match path with
+    | "net10" | "net1" | "10" -> Some (Net NetVersion.V1)
+    | "net11" | "11" -> Some (Net NetVersion.V1_1)
+    | "net20" | "net2" | "net20-full" | "20" -> Some (Net NetVersion.V2)
+    | "net35" | "net35-full" | "35" -> Some (Net NetVersion.V3_5)
+    | "net40" | "net4" | "net40-full" | "net403" | "40" -> Some (Net NetVersion.V4)
+    | "net45" | "45" -> Some (Net NetVersion.V4_5)
+    | "net451" -> Some (Net NetVersion.V4_5_1)
+    | "net452" -> Some (Net NetVersion.V4_5_2)
+    | "net453" -> Some (Net NetVersion.V4_5_3)
     | "monotouch" -> Some MonoTouch
     | "monoandroid" -> Some MonoAndroid
     | "sl3" | "sl30" -> Some (Silverlight "v3.0")
     | "sl4" | "sl40" -> Some (Silverlight "v4.0")
     | "sl5" | "sl50" -> Some (Silverlight "v5.0")
-    | "win8" | "windows8" | "netcore45" | "winrt45" -> Some (Windows "v8.0")
-    | "win81" | "windows81" | "netcore46" | "winrt46" -> Some (Windows "v8.1")
-    | "wp7" | "windowsphone7" -> Some (WindowsPhoneSilverlight "v7.0")
-    | "wp71" | "windowsphone71" -> Some (WindowsPhoneSilverlight "v7.1")
-    | "wp8" | "windowsphone8" -> Some (WindowsPhoneSilverlight "v8.0")
+    | "win8" | "netcore45" -> Some (Windows "v8.0")
+    | "win81" | "netcore46" -> Some (Windows "v8.1")
+    | "wp7" -> Some (WindowsPhoneSilverlight "v7.0")
+    | "wp71" -> Some (WindowsPhoneSilverlight "v7.1")
+    | "wp8" -> Some (WindowsPhoneSilverlight "v8.0")
     | "wpa81" -> Some (WindowsPhoneApp "v8.1")
     | _ -> None
 

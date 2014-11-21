@@ -1,6 +1,6 @@
 ﻿module FrameworkHandling
 
-type NetVersion =
+type FrameworkVersion =
     | V1
     | V1_1
     | V2
@@ -27,7 +27,7 @@ type NetVersion =
         | V4_5_3 -> "v4.5.3"
 
 type Platform =
-    | Net of NetVersion
+    | DotNetFramework of FrameworkVersion
     | MonoAndroid
     | MonoTouch
     | Silverlight of string
@@ -40,17 +40,17 @@ type TargetProfile =
     | PortableProfile of string * Platform list
 
     static member KnownTargetProfiles =
-        [SinglePlatform(Net NetVersion.V1)
-         SinglePlatform(Net NetVersion.V1_1)
-         SinglePlatform(Net NetVersion.V2)
-         SinglePlatform(Net NetVersion.V3)
-         SinglePlatform(Net NetVersion.V3_5)
-         SinglePlatform(Net NetVersion.V4_Client)
-         SinglePlatform(Net NetVersion.V4)
-         SinglePlatform(Net NetVersion.V4_5)
-         SinglePlatform(Net NetVersion.V4_5_1)
-         SinglePlatform(Net NetVersion.V4_5_2)
-         SinglePlatform(Net NetVersion.V4_5_3)
+        [SinglePlatform(DotNetFramework FrameworkVersion.V1)
+         SinglePlatform(DotNetFramework FrameworkVersion.V1_1)
+         SinglePlatform(DotNetFramework FrameworkVersion.V2)
+         SinglePlatform(DotNetFramework FrameworkVersion.V3)
+         SinglePlatform(DotNetFramework FrameworkVersion.V3_5)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4_Client)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4_5)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4_5_1)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4_5_2)
+         SinglePlatform(DotNetFramework FrameworkVersion.V4_5_3)
          SinglePlatform(MonoAndroid)
          SinglePlatform(MonoTouch)
          SinglePlatform(Silverlight "v3.0")
@@ -63,51 +63,51 @@ type TargetProfile =
          SinglePlatform(WindowsPhoneSilverlight "v8.0")
          SinglePlatform(WindowsPhoneSilverlight "v8.1")
          SinglePlatform(WindowsPhoneApp "v8.1")
-         PortableProfile("Profile2", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
-         PortableProfile("Profile3", [ Net NetVersion.V4; Silverlight "v4.0" ])
-         PortableProfile("Profile4", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
-         PortableProfile("Profile5", [ Net NetVersion.V4; Windows "v8.0"; MonoAndroid; MonoTouch ])
-         PortableProfile("Profile5", [ Net NetVersion.V4; Windows "v8.0" ])
-         PortableProfile("Profile6", [ Net NetVersion.V4; Windows "v8.0" ])
-         PortableProfile("Profile7" , [ Net NetVersion.V4_5; Windows "v8.0" ])
-         PortableProfile("Profile14", [ Net NetVersion.V4; Silverlight "v5.0" ])
-         PortableProfile("Profile18", [ Net NetVersion.V4; Silverlight "v4.0" ])
-         PortableProfile("Profile19", [ Net NetVersion.V4; Silverlight "v5.0" ])
-         PortableProfile("Profile23", [ Net NetVersion.V4_5; Silverlight "v4.0" ])
-         PortableProfile("Profile24", [ Net NetVersion.V4_5; Silverlight "v5.0" ])
+         PortableProfile("Profile2", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile3", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0" ])
+         PortableProfile("Profile4", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile5", [ DotNetFramework FrameworkVersion.V4; Windows "v8.0"; MonoAndroid; MonoTouch ])
+         PortableProfile("Profile5", [ DotNetFramework FrameworkVersion.V4; Windows "v8.0" ])
+         PortableProfile("Profile6", [ DotNetFramework FrameworkVersion.V4; Windows "v8.0" ])
+         PortableProfile("Profile7" , [ DotNetFramework FrameworkVersion.V4_5; Windows "v8.0" ])
+         PortableProfile("Profile14", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0" ])
+         PortableProfile("Profile18", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0" ])
+         PortableProfile("Profile19", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0" ])
+         PortableProfile("Profile23", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v4.0" ])
+         PortableProfile("Profile24", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v5.0" ])
          PortableProfile("Profile31", [ Windows "v8.1"; WindowsPhoneSilverlight "v8.1" ])
          PortableProfile("Profile32", [ Windows "v8.1"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile36", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile37", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
-         PortableProfile("Profile41", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0" ])
-         PortableProfile("Profile42", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
-         PortableProfile("Profile44", [ Net NetVersion.V4_5_1; Windows "v8.1" ])
-         PortableProfile("Profile46", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0" ])
-         PortableProfile("Profile47", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0" ])
-         PortableProfile("Profile49", [ Net NetVersion.V4_5; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile78", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile36", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile37", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile41", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0" ])
+         PortableProfile("Profile42", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile44", [ DotNetFramework FrameworkVersion.V4_5_1; Windows "v8.1" ])
+         PortableProfile("Profile46", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v4.0"; Windows "v8.0" ])
+         PortableProfile("Profile47", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v5.0"; Windows "v8.0" ])
+         PortableProfile("Profile49", [ DotNetFramework FrameworkVersion.V4_5; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile78", [ DotNetFramework FrameworkVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
          PortableProfile("Profile84", [ WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.1" ])
-         PortableProfile("Profile88", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
-         PortableProfile("Profile92", [ Net NetVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile95", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
-         PortableProfile("Profile96", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
-         PortableProfile("Profile102", [ Net NetVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile104", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
-         PortableProfile("Profile111", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile136", [ Net NetVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile143", [ Net NetVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile147", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile151", [ Net NetVersion.V4_5_1; Windows "v8.1"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile154", [ Net NetVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile88", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile92", [ DotNetFramework FrameworkVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile95", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.0" ])
+         PortableProfile("Profile96", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile102", [ DotNetFramework FrameworkVersion.V4; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile104", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v7.1" ])
+         PortableProfile("Profile111", [ DotNetFramework FrameworkVersion.V4_5; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile136", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile143", [ DotNetFramework FrameworkVersion.V4; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile147", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile151", [ DotNetFramework FrameworkVersion.V4_5_1; Windows "v8.1"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile154", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v4.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
          PortableProfile("Profile157", [ Windows "v8.1"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.1" ])
-         PortableProfile("Profile158", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile225", [ Net  NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])                  
-         PortableProfile("Profile240", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile255", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile259", [ Net NetVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile328", [ Net NetVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
-         PortableProfile("Profile336", [ Net NetVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])
-         PortableProfile("Profile344", [ Net NetVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])]
+         PortableProfile("Profile158", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile225", [ DotNetFramework  FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])                  
+         PortableProfile("Profile240", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile255", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile259", [ DotNetFramework FrameworkVersion.V4_5; Windows "v8.0"; WindowsPhoneSilverlight "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile328", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; WindowsPhoneSilverlight "v8.0"; Windows "v8.0"; WindowsPhoneApp "v8.1" ])
+         PortableProfile("Profile336", [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])
+         PortableProfile("Profile344", [ DotNetFramework FrameworkVersion.V4_5; Silverlight "v5.0"; Windows "v8.0"; WindowsPhoneApp "v8.1"; WindowsPhoneSilverlight "v8.0" ])]
 
     static member findPortableProfile name =
         TargetProfile.KnownTargetProfiles
@@ -140,15 +140,15 @@ let extractPlatform (path:string) =
         |> List.fold (fun (path:string) (pattern, replacement) -> path.Replace(pattern.ToLower(), replacement.ToLower())) (path.ToLower())
     
     match path with
-    | "net10" | "net1" | "10" -> Some (Net NetVersion.V1)
-    | "net11" | "11" -> Some (Net NetVersion.V1_1)
-    | "net20" | "net2" | "net20-full" | "20" -> Some (Net NetVersion.V2)
-    | "net35" | "net35-full" | "35" -> Some (Net NetVersion.V3_5)
-    | "net40" | "net4" | "net40-full" | "net403" | "40" -> Some (Net NetVersion.V4)
-    | "net45" | "45" -> Some (Net NetVersion.V4_5)
-    | "net451" -> Some (Net NetVersion.V4_5_1)
-    | "net452" -> Some (Net NetVersion.V4_5_2)
-    | "net453" -> Some (Net NetVersion.V4_5_3)
+    | "net10" | "net1" | "10" -> Some (DotNetFramework FrameworkVersion.V1)
+    | "net11" | "11" -> Some (DotNetFramework FrameworkVersion.V1_1)
+    | "net20" | "net2" | "net20-full" | "20" -> Some (DotNetFramework FrameworkVersion.V2)
+    | "net35" | "net35-full" | "35" -> Some (DotNetFramework FrameworkVersion.V3_5)
+    | "net40" | "net4" | "net40-full" | "net403" | "40" -> Some (DotNetFramework FrameworkVersion.V4)
+    | "net45" | "45" -> Some (DotNetFramework FrameworkVersion.V4_5)
+    | "net451" -> Some (DotNetFramework FrameworkVersion.V4_5_1)
+    | "net452" -> Some (DotNetFramework FrameworkVersion.V4_5_2)
+    | "net453" -> Some (DotNetFramework FrameworkVersion.V4_5_3)
     | "monotouch" -> Some MonoTouch
     | "monoandroid" -> Some MonoAndroid
     | "sl3" | "sl30" -> Some (Silverlight "v3.0")
@@ -172,19 +172,19 @@ let extractPlatforms path =
 // For a given platform return a list of compatible platforms that is also supports.
 let supportedPlatforms (platform:Platform) =
     match platform with
-    | MonoAndroid -> [ Net NetVersion.V4_5_3 ]
-    | MonoTouch -> [ Net NetVersion.V4_5_3 ]
-    | Net NetVersion.V1 -> [ ]
-    | Net NetVersion.V1_1 -> [ Net NetVersion.V1 ]
-    | Net NetVersion.V2 -> [ Net NetVersion.V1_1 ]
-    | Net NetVersion.V3 -> [ Net NetVersion.V2 ]
-    | Net NetVersion.V3_5 -> [ Net NetVersion.V3 ]
-    | Net NetVersion.V4_Client -> [ ]
-    | Net NetVersion.V4 -> [ Net NetVersion.V3_5; Net NetVersion.V4_Client ]
-    | Net NetVersion.V4_5 -> [ Net NetVersion.V4 ]
-    | Net NetVersion.V4_5_1 -> [ Net NetVersion.V4_5 ]
-    | Net NetVersion.V4_5_2 -> [ Net NetVersion.V4_5_1 ]
-    | Net NetVersion.V4_5_3 -> [ Net NetVersion.V4_5_2 ]
+    | MonoAndroid -> [ DotNetFramework FrameworkVersion.V4_5_3 ]
+    | MonoTouch -> [ DotNetFramework FrameworkVersion.V4_5_3 ]
+    | DotNetFramework FrameworkVersion.V1 -> [ ]
+    | DotNetFramework FrameworkVersion.V1_1 -> [ DotNetFramework FrameworkVersion.V1 ]
+    | DotNetFramework FrameworkVersion.V2 -> [ DotNetFramework FrameworkVersion.V1_1 ]
+    | DotNetFramework FrameworkVersion.V3 -> [ DotNetFramework FrameworkVersion.V2 ]
+    | DotNetFramework FrameworkVersion.V3_5 -> [ DotNetFramework FrameworkVersion.V3 ]
+    | DotNetFramework FrameworkVersion.V4_Client -> [ ]
+    | DotNetFramework FrameworkVersion.V4 -> [ DotNetFramework FrameworkVersion.V3_5; DotNetFramework FrameworkVersion.V4_Client ]
+    | DotNetFramework FrameworkVersion.V4_5 -> [ DotNetFramework FrameworkVersion.V4 ]
+    | DotNetFramework FrameworkVersion.V4_5_1 -> [ DotNetFramework FrameworkVersion.V4_5 ]
+    | DotNetFramework FrameworkVersion.V4_5_2 -> [ DotNetFramework FrameworkVersion.V4_5_1 ]
+    | DotNetFramework FrameworkVersion.V4_5_3 -> [ DotNetFramework FrameworkVersion.V4_5_2 ]
     | Silverlight "v3.0" -> [ ]
     | Silverlight "v4.0" -> [ Silverlight "v3.0" ]
     | Silverlight "v5.0" -> [ Silverlight "v4.0" ]
@@ -205,7 +205,7 @@ let supportedPlatforms (platform:Platform) =
 let getCondition (target:TargetProfile) =
     match target with
     | SinglePlatform(platform) -> match platform with
-                                  | Net(version) -> System.String.Format("$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == '{0}'", version)
+                                  | DotNetFramework(version) -> System.String.Format("$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == '{0}'", version)
                                   | Windows(version) -> System.String.Format("$(TargetFrameworkIdentifier) == '.NETCore' And $(TargetFrameworkVersion) == '{0}'", version)
                                   | Silverlight(version) -> System.String.Format("$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == '{0}'", version)
                                   | WindowsPhoneApp(version) -> System.String.Format("$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetFrameworkVersion) == '{0}'", version)

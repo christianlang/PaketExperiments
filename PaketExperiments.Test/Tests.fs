@@ -45,6 +45,15 @@ module ``Given a path`` =
     let ``it should return 1 for a compatible portable profile``() =
         getPenalty [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0" ] "net40+sl4"
         |> should equal 1
+        
+    [<Test>]
+    let ``it should return the correct penalty for compatible .NET Frameworks``() =
+        let path = "net20"
+        //getPenalty [ DotNetFramework FrameworkVersion.V2 ] path |> should equal 0
+        //getPenalty [ DotNetFramework FrameworkVersion.V3 ] path |> should equal 1
+        getPenalty [ DotNetFramework FrameworkVersion.V3_5 ] path |> should equal 2
+        getPenalty [ DotNetFramework FrameworkVersion.V4 ] path |> should equal 3
+
 
 module ``Given an empty path`` =
 

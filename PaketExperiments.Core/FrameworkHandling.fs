@@ -225,7 +225,7 @@ let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) 
         0
     else
         let penalties = supportedPlatforms targetPlatform
-                        |> List.map (getPlatformPenalty packagePlatform)
+                        |> List.map (fun target -> getPlatformPenalty target packagePlatform)
         List.min (1000::penalties) + 1
 
 let getPathPenalty (path:string) (platform:Platform) =

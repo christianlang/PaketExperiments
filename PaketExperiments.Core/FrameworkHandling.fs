@@ -229,9 +229,12 @@ let rec getPlatformPenalty (targetPlatform:Platform) (packagePlatform:Platform) 
         List.min (1000::penalties) + 1
 
 let getPathPenalty (path:string) (platform:Platform) =
-    extractPlatforms path
-    |> List.map (getPlatformPenalty platform)
-    |> List.min
+    if (System.String.IsNullOrWhiteSpace(path)) then
+        999 // an empty path is considered compatible with every target, but with a high penalty so explicit paths are preferred
+    else
+        extractPlatforms path
+        |> List.map (getPlatformPenalty platform)
+        |> List.min
 
 // Checks wether a list of target platforms is supported by this path and with which penalty. 
 let getPenalty (requiredPlatforms:Platform list) (path:string) =

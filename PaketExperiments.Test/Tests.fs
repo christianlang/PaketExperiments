@@ -46,7 +46,14 @@ module ``Given a path`` =
         getPenalty [ DotNetFramework FrameworkVersion.V4; Silverlight "v5.0" ] "net40+sl4"
         |> should equal 1
 
+module ``Given an empty path`` =
 
+    [<Test>]
+    let ``it should be okay for every target``() =
+        getPenalty [ DotNetFramework FrameworkVersion.V4_5 ] ""
+        |> should be (lessThan 1000)
+
+    
 module ``Given a list of paths`` =
 
     let paths = [ "net40"

@@ -163,7 +163,7 @@ let extractPlatform (path:string) =
     | _ -> None
 
 let split (path:string) =
-    path.Split('+', '-') |> Array.filter (fun x -> x <> "portable") |> Array.toList
+    path.Split('+') |> Array.map (fun s -> s.Replace("portable-", "")) |> Array.toList
 
 let extractPlatforms path =
     split path
